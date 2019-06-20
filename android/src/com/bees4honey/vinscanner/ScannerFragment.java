@@ -335,7 +335,6 @@ public class ScannerFragment extends Fragment {
 //                                byte[] data = rotateCameraImage(buffer.data, buffer.width, buffer.height);
 //                                buffer = new ImageBuffer(data, w, h, ImageBuffer.ORIENTATION_UNKNOWN);
 //                            }
-                            buffer = new ImageBuffer(data, w, h, ImageBuffer.ORIENTATION_LANDSCAPE);
                             Log.d(TAG, "Buffer size: " + buffer.data.length +
                                     ", buffer width: " + buffer.width + ", buffer height: " + buffer.height);
                             String code = scanner.parse(buffer.data, buffer.width, buffer.height, context);
