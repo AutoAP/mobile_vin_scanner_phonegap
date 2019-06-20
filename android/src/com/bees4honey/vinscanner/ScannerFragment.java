@@ -13,7 +13,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.OrientationEventListener;
+//import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -55,7 +55,7 @@ public class ScannerFragment extends Fragment {
     private int camOrientation;
     private SurfaceCamCallback callback;
     private Handler handler;
-    private OrientationEventListener orientationListener = null;
+//    private OrientationEventListener orientationListener = null;
 
     private boolean scanVertically;
     private boolean flashOn;    //shows if camera flash is on or off
@@ -89,7 +89,7 @@ public class ScannerFragment extends Fragment {
         scanVertically = false;
         flashOn = false;
         handler = new ScannerHandler(new WeakReference<ScannerFragment>(this));
-        camOrientation = 0;
+        camOrientation = 1;
 
         lastAutofocusTime = java.lang.System.currentTimeMillis();
 
@@ -161,45 +161,45 @@ public class ScannerFragment extends Fragment {
             }
         }
 
-        if ((getActivity() != null) && (orientationListener == null)) {
-            orientationListener = new OrientationEventListener(getActivity()) {
-                private int orientationPrev = 0;
-
-                @Override
-                public void onOrientationChanged(int orientation) {
-                    if (orientationPrev != orientation) {
-                        orientationPrev = orientation;
-                        setCameraDisplayOrientation();
-                    }
-                }
-            };
-            orientationListener.enable();
-        }
+//        if ((getActivity() != null) && (orientationListener == null)) {
+//            orientationListener = new OrientationEventListener(getActivity()) {
+//                private int orientationPrev = 0;
+//
+//                @Override
+//                public void onOrientationChanged(int orientation) {
+//                    if (orientationPrev != orientation) {
+//                        orientationPrev = orientation;
+//                        setCameraDisplayOrientation();
+//                    }
+//                }
+//            };
+//            orientationListener.enable();
+//        }
 
         handler.post(autoFocusRunnable);
     }
 
-    private void setCameraDisplayOrientation() {
-        if (camera == null) {
-            return;
-        }
-        Display display = ((WindowManager) getActivity().getSystemService(Activity.WINDOW_SERVICE)).getDefaultDisplay();
-        switch (display.getRotation()) {
-            case Surface.ROTATION_0:
-                camOrientation = 90;
-                break;
-            case Surface.ROTATION_90:
-                camOrientation = 0;
-                break;
-            case Surface.ROTATION_180:
-                camOrientation = 270;
-                break;
-            case Surface.ROTATION_270:
-                camOrientation = 180;
-                break;
-        }
-        camera.setDisplayOrientation(camOrientation);
-    }
+//    private void setCameraDisplayOrientation() {
+//        if (camera == null) {
+//            return;
+//        }
+//        Display display = ((WindowManager) getActivity().getSystemService(Activity.WINDOW_SERVICE)).getDefaultDisplay();
+//        switch (display.getRotation()) {
+//            case Surface.ROTATION_0:
+//                camOrientation = 90;
+//                break;
+//            case Surface.ROTATION_90:
+//                camOrientation = 0;
+//                break;
+//            case Surface.ROTATION_180:
+//                camOrientation = 270;
+//                break;
+//            case Surface.ROTATION_270:
+//                camOrientation = 180;
+//                break;
+//        }
+//        camera.setDisplayOrientation(camOrientation);
+//    }
 
     private Camera getCameraInstance() {
         Camera c = null;
@@ -219,10 +219,10 @@ public class ScannerFragment extends Fragment {
 
         handler.removeCallbacks(autoFocusRunnable);
 
-        if (orientationListener != null) {
-            orientationListener.disable();
-            orientationListener = null;
-        }
+//        if (orientationListener != null) {
+//            orientationListener.disable();
+//            orientationListener = null;
+//        }
         if (surfaceView != null) {
             surfaceView.getHolder().removeCallback(callback);
             callback = null;
@@ -327,15 +327,15 @@ public class ScannerFragment extends Fragment {
                         Context context = f.getActivity();
                         ScannerListener listener = f.getListener();
                         if (context != null && listener != null) {
-                            if ((f.isScanVertically() && buffer.orientation == ImageBuffer.ORIENTATION_LANDSCAPE) ||
-                                    (!f.isScanVertically() && buffer.orientation == ImageBuffer.ORIENTATION_PORTRAIT)) {
-                                int w = buffer.height;
-                                int h = buffer.width;
-                                Log.d(TAG, "Will rotate camera image");
-                                byte[] data = rotateCameraImage(buffer.data, buffer.width, buffer.height);
-                                buffer = new ImageBuffer(data, w, h, ImageBuffer.ORIENTATION_UNKNOWN);
-                            }
-
+//                            if ((f.isScanVertically() && buffer.orientation == ImageBuffer.ORIENTATION_LANDSCAPE) ||
+//                                    (!f.isScanVertically() && buffer.orientation == ImageBuffer.ORIENTATION_PORTRAIT)) {
+//                                int w = buffer.height;
+//                                int h = buffer.width;
+//                                Log.d(TAG, "Will rotate camera image");
+//                                byte[] data = rotateCameraImage(buffer.data, buffer.width, buffer.height);
+//                                buffer = new ImageBuffer(data, w, h, ImageBuffer.ORIENTATION_UNKNOWN);
+//                            }
+                            buffer = new ImageBuffer(data, w, h, ImageBuffer.ORIENTATION_LANDSCAPE);
                             Log.d(TAG, "Buffer size: " + buffer.data.length +
                                     ", buffer width: " + buffer.width + ", buffer height: " + buffer.height);
                             String code = scanner.parse(buffer.data, buffer.width, buffer.height, context);
@@ -382,7 +382,7 @@ public class ScannerFragment extends Fragment {
                 try {
                     // restart camera preview
                     configureCamera(width, height);
-                    setCameraDisplayOrientation();
+//                    setCameraDisplayOrientation();
                     camera.setPreviewDisplay(holder);
                     camera.setPreviewCallback(this);
                     camera.startPreview();
@@ -400,7 +400,7 @@ public class ScannerFragment extends Fragment {
             }
 
             Camera.Parameters cameraParams = camera.getParameters();
-            cameraParams.set("orientation", "portrait");
+            cameraParams.set("orientation", "landscape");
             List<Camera.Size> sizes = cameraParams.getSupportedPreviewSizes();
             previewSize = getOptimalPreviewSize(sizes, Math.max(width, height), Math.min(width, height));
             cameraParams.setPreviewSize(previewSize.width, previewSize.height);
@@ -477,10 +477,10 @@ public class ScannerFragment extends Fragment {
                 return;
             }
 
-            int bufferOrientation = ImageBuffer.calcImgOrientation(camOrientation);
+//            int bufferOrientation = ImageBuffer.calcImgOrientation(camOrientation);
             Message msg = new Message();
             msg.what = DECODE;
-            msg.obj = new ImageBuffer(data, previewSize.width, previewSize.height, bufferOrientation);
+            msg.obj = new ImageBuffer(data, previewSize.width, previewSize.height, ImageBuffer.ORIENTATION_LANDSCAPE);
             handler.sendMessageDelayed(msg, DECODE_DELAY_MSECS);
         }
     }

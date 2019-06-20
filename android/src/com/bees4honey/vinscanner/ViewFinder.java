@@ -38,18 +38,19 @@ public class ViewFinder extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         if (running) {
-            switch (contentOrientation) {
-                case HORIZONTAL:
-                    //draw horizontal scanning area
-                    drawWithHorizontalOrientation(canvas);
-                    break;
-                case VERTICAL:
-                    //draw vertical scanning area
-                    drawWithVerticalOrientation(canvas);
-                    break;
-                default:
-                    //do nothing
-            }
+            drawWithHorizontalOrientation(canvas)
+//            switch (contentOrientation) {
+//                case HORIZONTAL:
+//                    //draw horizontal scanning area
+//                    drawWithHorizontalOrientation(canvas);
+//                    break;
+//                case VERTICAL:
+//                    //draw vertical scanning area
+//                    drawWithVerticalOrientation(canvas);
+//                    break;
+//                default:
+//                    //do nothing
+//            }
 
             // Cause an invalidate of the specified area to happen on a subsequent
             // cycle through the event loop. Waits for the specified amount of time.
@@ -57,21 +58,21 @@ public class ViewFinder extends View {
         }
     }
 
-    private void drawWithVerticalOrientation(Canvas canvas) {
-        int width = getWidth();
-        int height = getHeight();
-
-        //draw vertical laser in the center of the scanning area
-        int laserCenter = width/2;
-        box.set(laserCenter - 2, 0, laserCenter + 2, height);
-        paint.setColor(laserColor);
-        canvas.drawRect(box, paint);
-
-        // Draw little cross in the middle
-        int crossCenter = height / 2;
-        box.set(width/2 - CROSS_RADIUS, crossCenter - 2, width/2 + CROSS_RADIUS, crossCenter + 2);
-        canvas.drawRect(box, paint);
-    }
+//    private void drawWithVerticalOrientation(Canvas canvas) {
+//        int width = getWidth();
+//        int height = getHeight();
+//
+//        //draw vertical laser in the center of the scanning area
+//        int laserCenter = width/2;
+//        box.set(laserCenter - 2, 0, laserCenter + 2, height);
+//        paint.setColor(laserColor);
+//        canvas.drawRect(box, paint);
+//
+//        // Draw little cross in the middle
+//        int crossCenter = height / 2;
+//        box.set(width/2 - CROSS_RADIUS, crossCenter - 2, width/2 + CROSS_RADIUS, crossCenter + 2);
+//        canvas.drawRect(box, paint);
+//    }
 
     private void drawWithHorizontalOrientation(Canvas canvas) {
         int width = getWidth();            // get width
@@ -97,10 +98,10 @@ public class ViewFinder extends View {
         }
     }
 
-    public void setContentOrientation(ContentOrientation contentOrientation) {
-        if (this.contentOrientation != contentOrientation) {
-            this.contentOrientation = contentOrientation;
-            invalidate();        // init redrawing of window
-        }
-    }
+//    public void setContentOrientation(ContentOrientation contentOrientation) {
+//        if (this.contentOrientation != contentOrientation) {
+//            this.contentOrientation = contentOrientation;
+//            invalidate();        // init redrawing of window
+//        }
+//    }
 }

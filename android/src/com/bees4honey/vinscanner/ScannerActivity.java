@@ -104,8 +104,8 @@ public class ScannerActivity extends AppCompatActivity implements ScannerListene
         super.onResume();
         if (scanner != null) {
             scanner.setListener(this);
-            finder.setContentOrientation(scanner.isScanVertically() ? ViewFinder.ContentOrientation.VERTICAL :
-                    ViewFinder.ContentOrientation.HORIZONTAL);
+//            finder.setContentOrientation(scanner.isScanVertically() ? ViewFinder.ContentOrientation.VERTICAL :
+//                    ViewFinder.ContentOrientation.HORIZONTAL);
         }
     }
 
@@ -160,16 +160,16 @@ public class ScannerActivity extends AppCompatActivity implements ScannerListene
         vincodeView = (TextView)findViewById(getResId("tv_vincode", "id"));
         vincodeView.setVisibility(View.INVISIBLE);
 
-        findViewById(getResId("orientationButton", "id")).
-                setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        boolean vertically = !scanner.isScanVertically();
-                        scanner.setScanVertically(vertically);
-                        finder.setContentOrientation(vertically ? ViewFinder.ContentOrientation.VERTICAL :
-                                ViewFinder.ContentOrientation.HORIZONTAL);
-                    }
-                });
+//        findViewById(getResId("orientationButton", "id")).
+//                setOnClickListener(new View.OnClickListener(){
+//                    @Override
+//                    public void onClick(View v) {
+//                        boolean vertically = !scanner.isScanVertically();
+//                        scanner.setScanVertically(vertically);
+//                        finder.setContentOrientation(vertically ? ViewFinder.ContentOrientation.VERTICAL :
+//                                ViewFinder.ContentOrientation.HORIZONTAL);
+//                    }
+//                });
 
         findViewById(getResId("torchButton", "id")).setOnClickListener(new View.OnClickListener() {
 
