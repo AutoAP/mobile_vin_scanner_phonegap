@@ -38,7 +38,7 @@ public class ViewFinder extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         if (running) {
-            drawWithHorizontalOrientation(canvas)
+            drawWithHorizontalOrientation(canvas);
 //            switch (contentOrientation) {
 //                case HORIZONTAL:
 //                    //draw horizontal scanning area
