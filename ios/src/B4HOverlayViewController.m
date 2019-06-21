@@ -48,15 +48,18 @@
 
 -(BOOL) shouldAutorotate
 {
-    return YES;
+    return NO;
 }
 
 -(NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskAll;
+    return UIInterfaceOrientationMaskLandscapeLeft;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation {
+    if (interfaceOrientation != UIInterfaceOrientationLandscapeLeft) {
+        return NO;
+    }
 	return YES;
 }
 
@@ -117,19 +120,6 @@
     [super viewDidLayoutSubviews];
     B4HScannerOrientation scanOrientation = self.parentScanner.scanOrientation;
     [self setBackgroundForScanOrientation:scanOrientation];
-}
-
-- (void) changeScanOrientation
-{
-    if (self.parentScanner.scanOrientation == B4HScannerVertical) {
-        // set horizontal scan orientation
-        self.parentScanner.scanOrientation = B4HScannerHorizontal;
-    } else {
-        // set vertical scan orientation
-        self.parentScanner.scanOrientation = B4HScannerVertical;
-    }
-    
-    [self setBackgroundForScanOrientation:self.parentScanner.scanOrientation];
 }
 
 - (void)setBackgroundForScanOrientation:(B4HScannerOrientation)scanOrientation {
