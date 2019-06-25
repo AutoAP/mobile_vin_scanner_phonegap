@@ -33,4 +33,5 @@
 //	Go to previous screen
 - (IBAction)cancelScan;
 //
+- (IBAction)changeScanOrientation;
 @end
